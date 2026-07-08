@@ -52,8 +52,8 @@ public class UserController {
     }
 
     @DeleteMapping("/deleteuser/{id}")
-    public Map<String,Object> deleteUser(@PathVariable int id) {
-        userService.deleteUser(id);
+    public Map<String,Object> deleteUser(@PathVariable int id,HttpSession session) {
+        userService.deleteUser(id,session);
         return Map.of("message", "User deleted successfully", "valid", true);
     }
 }

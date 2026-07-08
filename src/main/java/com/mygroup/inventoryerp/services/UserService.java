@@ -4,6 +4,7 @@ import java.util.*;
 
 import org.springframework.stereotype.Service;
 
+import com.mygroup.inventoryerp.dto.ActivityDetailRequest;
 import com.mygroup.inventoryerp.dto.ActivityLogRequest;
 import com.mygroup.inventoryerp.dto.LoginRequest;
 import com.mygroup.inventoryerp.dto.UserInfo;
@@ -71,7 +72,6 @@ public class UserService {
 
     public Map<String,Object> addUser(UserInfo userInfo,HttpSession session) {
         ActivityLogRequest log=new ActivityLogRequest();
-        log.setAction("CREATE");
         log.setTableName("USERS");
         log.setUserId((Integer)session.getAttribute("userId"));
 
@@ -93,10 +93,11 @@ public class UserService {
         user.getLastLogin();
 
         User addedUser=userRepo.save(user);
-       // User loginedUser=userRepo.findById((Integer) session.getAttribute("userId")).orElse(null);
+        User loginedUser=userRepo.findById((Integer) session.getAttribute("userId")).orElse(null);
 
         log.setRecordId(addedUser.getUserId());
-        //activityLogService.addActivityLog(log,loginedUser);
+        log.setAction("CREATE");
+        activityLogService.addActivityLog(log,loginedUser);
 
         response.put("message", "User created successfully");
         response.put("valid", true);
@@ -104,6 +105,7 @@ public class UserService {
     }
 
     public User editUser(Integer id, UserInfo userInfo,HttpSession session) {
+        boolean flag = false;
 
         User user = userRepo.findById(id).orElse(null);
         if(user==null){
@@ -111,28 +113,70 @@ public class UserService {
         }
 
         ActivityLogRequest log=new ActivityLogRequest();
-        log.setAction("UPDATE");
+        List<ActivityDetailRequest> details = new ArrayList<>();
         log.setTableName("USERS");
         log.setUserId((Integer)session.getAttribute("userId"));
         log.setRecordId(id);
 
-        if(!userInfo.getPassword().isEmpty()) user.setPassword(passwordEncoder.encode(userInfo.getPassword()));
+        if(!userInfo.getPassword().isEmpty()){
+            flag=true;
+            String encodedPassword = passwordEncoder.encode(userInfo.getPassword());
+            ActivityDetailRequest detail = new ActivityDetailRequest();
+            detail.setFieldName("password");
+            detail.setOldValue(user.getPassword());
+            detail.setNewValue(encodedPassword);
+            details.add(detail);
+            user.setPassword(encodedPassword);
+        }
         Role role=roleService.getRoleById(userInfo.getRoleId());
-        user.setRole(role);
+        if(user.getRole().getRoleId()!=userInfo.getRoleId()){
+            flag=true;
+            ActivityDetailRequest detail = new ActivityDetailRequest();
+            detail.setFieldName("roleId");
+            detail.setOldValue(user.getRole().getRoleName());
+            detail.setNewValue(role.getRoleName());
+            details.add(detail);
+            user.setRole(role);
+        }
 
-        user.setUserName(userInfo.getUserName());
-        user.setUserEmail(userInfo.getUserEmail());
+        if(!user.getUserName().equals(userInfo.getUserName())){
+            flag=true;
+            ActivityDetailRequest detail = new ActivityDetailRequest();
+            detail.setFieldName("userName");
+            detail.setOldValue(user.getUserName());
+            detail.setNewValue(userInfo.getUserName());
+            details.add(detail);
+            user.setUserName(userInfo.getUserName());
+        }
+        if(!user.getUserEmail().equals(userInfo.getUserEmail())){
+            flag=true;
+            ActivityDetailRequest detail = new ActivityDetailRequest();
+            detail.setFieldName("userEmail");
+            detail.setOldValue(user.getUserEmail());
+            detail.setNewValue(userInfo.getUserEmail());
+            details.add(detail);
+            user.setUserEmail(userInfo.getUserEmail());
+        }
 
         User addedUser= userRepo.save(user);
-        //User loginedUser=userRepo.findById((Integer)session.getAttribute("userId")).orElse(null);
+        User loginedUser=userRepo.findById((Integer)session.getAttribute("userId")).orElse(null);
 
         log.setRecordId(addedUser.getUserId());
-        
-        //activityLogService.addActivityLog(log,loginedUser);
+        log.setAction("UPDATE");
+        log.setDetails(details);
+
+        if(flag) activityLogService.addActivityLog(log,loginedUser);
         return addedUser;
     }
 
-    public void deleteUser(int id) {
+    public void deleteUser(int id,HttpSession session) {
+        ActivityLogRequest log=new ActivityLogRequest();
+        log.setTableName("USERS");
+        log.setUserId((Integer)session.getAttribute("userId"));
+        log.setRecordId(id);
+        User loginedUser=userRepo.findById((Integer)session.getAttribute("userId")).orElse(null);
+        log.setAction("DELETE");
+        activityLogService.addActivityLog(log,loginedUser);
         userRepo.deleteById(id);
     }
 }

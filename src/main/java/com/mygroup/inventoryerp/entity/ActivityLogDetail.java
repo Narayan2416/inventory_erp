@@ -66,4 +66,12 @@ public class ActivityLogDetail {
         this.newValue=newValue;
     }
 
+    public ActivityLog getActivityLog(){
+        return activityLog;
+    }
+
+    public void setActivityLog(ActivityLog activityLog){
+        this.activityLog=activityLog;
+    }
+
 }
