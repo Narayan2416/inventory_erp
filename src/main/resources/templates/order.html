@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Order Management</title>
+
+    <link rel="stylesheet" href="/css/user.css">
+
+</head>
+
+<body>
+
+    <h1>Order Management</h1>
+
+    <ul id="menu"></ul>
+
+    <div class="form-container">
+
+        <div class="toolbar">
+
+            <button
+                id="addOrderBtn"
+                onclick="showAddOrderModal()">
+
+                + Add Order
+
+            </button>
+
+            <input
+                id="searchOrder"
+                type="text"
+                placeholder="Search Order"
+                oninput="searchTable('searchOrder','ordersTableBody')">
+
+        </div>
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>ID</th>
+                    <th>Customer</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>Total</th>
+                    <th>Actions</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="ordersTableBody">
+
+            </tbody>
+
+        </table>
+
+        <br><br>
+
+        <h2>
+
+            Selected Order Items
+
+        </h2>
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>ID</th>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Total</th>
+                    <th>Actions</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="orderItemsTableBody">
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+    <!-- ===================================== -->
+    <!-- Add Order Modal -->
+    <!-- ===================================== -->
+
+    <div
+        id="addOrderModal"
+        class="modal">
+
+        <div class="modal-content">
+            <span class="close" onclick="closeAddOrderModal()">&times;</span>
+            <h2 id="modalTitle">Add Order</h2>
+            <label>Customer</label>
+            <select id="customer"></select>
+            <br><br>
+            <h3>Products</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Total</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody id="orderItemBody"></tbody>
+
+            </table>
+            <br>
+            <button type="button" onclick="addProductRow()">+ Add Product</button>
+
+            <br><br>
+
+            <h3>
+                Grand Total :
+                ₹ <span id="grandTotal">0</span>
+            </h3>
+            <button id="saveOrderBtn" onclick="addOrder()">Add Order</button>
+
+        </div>
+    </div>
+
+    <!-- ===================================== -->
+    <!-- Edit Order Modal -->
+    <!-- ===================================== -->
+
+    <div
+        id="editOrderModal"
+        class="modal">
+
+        <div class="modal-content">
+            <span class="close" onclick="closeEditOrderModal()">&times;</span>
+            <h2>Edit Order</h2>
+            <label>Customer</label>
+            <select id="editCustomer"></select>
+            <br><br>
+            <label>Status</label>
+            <select id="editStatus">
+                <option value="true">Processed</option>
+                <option value="false">Not Yet Processed</option>
+            </select>
+            <h3>Products</h3>
+
+            <br><br>
+
+            <button id="updateOrderBtn" onclick="updateOrder()">Update Order</button>
+        </div>
+    </div>
+
+
+    <!-- ===================================== -->
+    <!-- Edit Order Item Modal -->
+    <!-- ===================================== -->
+
+    <div id="editItemModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeEditItemModal()">&times;</span>
+            <h2>Edit Order Item</h2>
+            <label>Product</label>
+            <select id="editProduct"></select>
+            <br><br>
+            <label>Quantity</label>
+            <input id="editQuantity" type="number" min="1">
+            <br><br>
+
+            <button id="updateItemBtn" onclick="updateItem()">Update Item</button>
+        </div>
+    </div>
+
+    <script src="/js/common.js"></script>
+    <script src="/js/order.js"></script>
+
+</body>
+
+</html>

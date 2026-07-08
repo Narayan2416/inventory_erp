@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/user.css">
+    <title>Inventory Management</title>
+</head>
+<body>
+
+    <h1>Inventory Management</h1>
+
+    <ul id="menu"></ul>
+
+    <div class="form-container">
+
+        <div class="toolbar">
+            <button id="addInventoryBtn" onclick="showAddInventoryModal()">
+                + Add Inventory
+            </button>
+
+            <input id="searchInventory"
+                   oninput="searchTable('searchInventory','inventoryTableBody')"
+                   type="text"
+                   placeholder="Search Inventory">
+        </div>
+
+        <table id="inventoryTable">
+
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Product</th>
+                    <th>Company</th>
+                    <th>Location</th>
+                    <th>Quantity</th>
+                    <th>Last Updated Date</th>
+                    <th>Last Updates Time</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+            <tbody id="inventoryTableBody">
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+    <!-- Add/Edit Inventory Modal -->
+    <div id="addInventoryModal" class="modal">
+
+        <div class="modal-content">
+
+            <span class="close" onclick="closeAddInventoryModal()">&times;</span>
+
+            <h2 id="modalTitle">Add Inventory</h2>
+
+            <label for="productId">Product</label>
+
+            <select id="productId">
+                <option value="">Select Product</option>
+            </select>
+
+            <input type="text" id="location" placeholder="Location">
+
+            <input type="number" id="quantity" placeholder="Quantity" min="0">
+
+            <button id="submitBtn" onclick="addInventory()">Add Inventory</button>
+            <a id="error" style="display:none"></a>
+
+        </div>
+
+    </div>
+
+    <script src="/js/common.js"></script>
+    <script src="/js/inventory.js"></script>
+
+</body>
+</html>

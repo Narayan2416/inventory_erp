@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/user.css">
+    <title>Product Management</title>
+</head>
+<body>
+
+    <h1>Product Management</h1>
+
+    <ul id="menu"></ul>
+
+    <div class="form-container">
+
+        <div class="toolbar">
+            <button id="addProductBtn" onclick="showAddProductModal()">+ Add Product</button>
+
+            <input id="searchProduct" oninput="searchTable('searchProduct','productTableBody')" type="text" placeholder="Search Product">
+        </div>
+
+        <table id="productTable">
+
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Company</th>
+                    <th>Price</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+            <tbody id="productTableBody">
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+    <!-- Add/Edit Product Modal -->
+    <div id="addProductModal" class="modal">
+
+        <div class="modal-content">
+
+            <span class="close" onclick="closeAddProductModal()">&times;</span>
+
+            <h2 id="modalTitle">Add Product</h2>
+
+            <input type="text" id="productName" placeholder="Product Name">
+
+            <input type="text" id="productType" placeholder="Product Type" list="productTypes">
+            <datalist id="productTypes"></datalist>
+
+            <input type="text" id="productCompany" placeholder="Product Company" list="productCompanies">
+            <datalist id="productCompanies"> </datalist>
+            
+            <input type="number" id="productPrice" placeholder="Product Price" step="0.01" min="0">
+
+            <button id="submitBtn" onclick="addProduct()">Add Product</button>
+            <a id="error" style="display:none"></a>
+        </div>
+
+    </div>
+
+    <script src="/js/common.js"></script>
+    <script src="/js/product.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/user.css">
+    <title>Customer Management</title>
+</head>
+
+<body>
+
+<h1>Customer Management</h1>
+
+<ul id="menu"></ul>
+
+<div class="form-container">
+
+    <div class="toolbar">
+
+        <button id="addCustomerBtn" onclick="showAddCustomerModal()">
+            + Add Customer
+        </button>
+
+        <input
+            id="searchCustomer"
+            type="text"
+            placeholder="Search Customer"
+            oninput="searchTable('searchCustomer','customerTableBody')">
+
+    </div>
+
+    <table>
+
+        <thead>
+
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Address</th>
+            <th>City</th>
+            <th>State</th>
+            <th>Pin Code</th>
+            <th>Actions</th>
+        </tr>
+
+        </thead>
+
+        <tbody id="customerTableBody">
+
+        </tbody>
+
+    </table>
+
+</div>
+
+
+<div id="addCustomerModal" class="modal">
+
+    <div class="modal-content">
+
+        <span class="close" onclick="closeAddCustomerModal()">&times;</span>
+
+        <h2 id="modalTitle">Add Customer</h2>
+
+        <input
+            type="text"
+            id="customerName"
+            placeholder="Customer Name">
+
+        <input
+            type="email"
+            id="customerEmail"
+            placeholder="Customer Email">
+
+        <input
+            type="text"
+            id="customerPhone"
+            placeholder="Customer Phone">
+
+        <input
+            type="text"
+            id="addressLine"
+            placeholder="Address">
+
+        <input
+            type="text"
+            id="city"
+            placeholder="City">
+
+        <input
+            type="text"
+            id="state"
+            placeholder="State">
+
+        <input
+            type="text"
+            id="pinCode"
+            placeholder="Pin Code">
+
+        <button
+            id="submitBtn"
+            onclick="addCustomer()">
+            Add Customer
+        </button>
+
+    </div>
+
+</div>
+
+<script src="/js/common.js"></script>
+<script src="/js/customer.js"></script>
+
+</body>
+</html>

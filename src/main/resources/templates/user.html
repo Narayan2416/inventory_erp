@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/user.css">
+    <title>User Management</title>
+</head>
+<body>
+
+    <h1>User Management</h1>
+    <ul id="menu"></ul>
+    <div class="form-container">
+
+        <div class="toolbar">
+            <button id="addUserBtn" onclick="showAddUserModal()">+ Add User</button>
+            <input id="searchUser" oninput="searchTable('searchUser','userTableBody')" type="text" placeholder="Search User">
+        </div>
+        <table id="userTable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+            <tbody id="userTableBody">
+            </tbody>
+        </table>
+
+    </div>
+
+    <!-- Add User Popup -->
+    <div id="addUserModal" class="modal">
+
+        <div class="modal-content">
+
+            <span class="close" onclick="closeAddUserModal()">&times;</span>
+
+            <h2 id="modalTitle">Add/Edit User</h2>
+
+            <input id="username" type="text" placeholder="Username">
+            <input id="password" type="password" placeholder="Password">
+            <input id="email" type="email" placeholder="Email">
+
+            <select id="role" required>
+                <option value="1">Admin</option>
+                <option value="2">Inventory Manager</option>
+                <option value="3">Customer Manager</option>
+                <option value="4">Supervisor</option>
+            </select>
+
+            <button id="submitBtn" onclick="addUser()">Add User</button>
+            <a id="error" style="display:none"></a>
+        </div>
+    </div>
+
+    <script src="/js/common.js"></script>
+    <script src="/js/user.js"></script>
+
+</body>
+</html>
