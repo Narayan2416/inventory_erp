@@ -3,7 +3,6 @@ package com.mygroup.inventoryerp.entity;
 import java.time.LocalDateTime;
 import java.util.*;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.*;
 
