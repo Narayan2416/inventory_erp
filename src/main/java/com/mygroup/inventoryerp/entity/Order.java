@@ -3,7 +3,6 @@ package com.mygroup.inventoryerp.entity;
 import java.time.LocalDateTime;
 import java.util.*;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.*;
 
@@ -23,12 +22,10 @@ public class Order {
     private boolean status;
 
     @ManyToOne
-    @JsonManagedReference
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
     @OneToMany(mappedBy = "order",cascade = CascadeType.ALL,orphanRemoval = true)
-    @JsonManagedReference
     private List<OrderItem> orderItems;
 
     public Order() {

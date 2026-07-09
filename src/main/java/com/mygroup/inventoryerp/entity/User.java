@@ -3,7 +3,6 @@ package com.mygroup.inventoryerp.entity;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -40,12 +39,10 @@ public class User {
     private LocalDateTime lastLogin;
 
     @ManyToOne
-    @JsonManagedReference
     @JoinColumn(name = "role_id")
     private Role role;
 
     @OneToMany(mappedBy = "user")
-    @JsonManagedReference
     private List<ActivityLog> activityLogs;
 
     public User() {

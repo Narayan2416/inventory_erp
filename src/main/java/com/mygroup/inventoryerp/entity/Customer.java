@@ -2,7 +2,7 @@ package com.mygroup.inventoryerp.entity;
 
 import java.util.*;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -44,7 +44,7 @@ public class Customer {
     private String pinCode;
     
     @OneToMany(mappedBy = "customer")
-    @JsonBackReference
+    @JsonIgnore
     private List<Order> orders;
 
     public Customer(){

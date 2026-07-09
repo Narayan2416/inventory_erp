@@ -2,7 +2,7 @@ package com.mygroup.inventoryerp.entity;
 
 import java.util.*;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -36,11 +36,11 @@ public class Product {
     private double productPrice;
 
     @OneToMany(mappedBy = "product")
-    @JsonBackReference
+    @JsonIgnore
     private List<OrderItem> orderItems;
 
     @OneToMany(mappedBy = "product")
-    @JsonBackReference
+    @JsonIgnore
     private List<Inventory> inventory;
 
     // Constructors, getters, and setters

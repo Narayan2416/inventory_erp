@@ -1,5 +1,7 @@
 package com.mygroup.inventoryerp.dto;
 
+import java.util.List;
+
 public class ActivityLogRequest {
 
     private String action;
@@ -7,9 +9,7 @@ public class ActivityLogRequest {
     private String tableName;
     private Integer userId;
 
-    private String fieldName;
-    private String oldValue;
-    private String newValue;
+    List<ActivityDetailRequest> details;
 
     // Getter and Setter for action
     public String getAction() {
@@ -47,30 +47,11 @@ public class ActivityLogRequest {
         this.userId = userId;
     }
 
-    // Getter and Setter for fieldName
-    public String getFieldName() {
-        return fieldName;
+    public List<ActivityDetailRequest> getDetails() {
+        return details;
     }
 
-    public void setFieldName(String fieldName) {
-        this.fieldName = fieldName;
-    }
-
-    // Getter and Setter for oldValue
-    public String getOldValue() {
-        return oldValue;
-    }
-
-    public void setOldValue(String oldValue) {
-        this.oldValue = oldValue;
-    }
-
-    // Getter and Setter for newValue
-    public String getNewValue() {
-        return newValue;
-    }
-
-    public void setNewValue(String newValue) {
-        this.newValue = newValue;
+    public void setDetails(List<ActivityDetailRequest> details) {
+        this.details = details;
     }
 }
