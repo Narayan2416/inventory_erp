@@ -3,8 +3,7 @@ package com.mygroup.inventoryerp.entity;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -39,12 +38,11 @@ public class ActivityLog {
     private LocalDateTime activityTime;
 
     @ManyToOne
-    @JsonBackReference
+    @JsonIgnore
     @JoinColumn(name = "user_id")
     private User user;
 
     @OneToMany(mappedBy = "activityLog",cascade = CascadeType.ALL)
-    @JsonManagedReference
     private List<ActivityLogDetail> activityLogDetails;
 
     // Getters and Setters

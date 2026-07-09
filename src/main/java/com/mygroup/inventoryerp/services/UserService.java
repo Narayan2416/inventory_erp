@@ -71,10 +71,6 @@ public class UserService {
     }
 
     public Map<String,Object> addUser(UserInfo userInfo,HttpSession session) {
-        ActivityLogRequest log=new ActivityLogRequest();
-        log.setTableName("USERS");
-        log.setUserId((Integer)session.getAttribute("userId"));
-
         Optional<User> existingUser = userRepo.findByUserName(userInfo.getUserName().toUpperCase());
         Map<String,Object> response = new HashMap<>();
         if (existingUser.isPresent()) {
@@ -95,6 +91,9 @@ public class UserService {
         User addedUser=userRepo.save(user);
         User loginedUser=userRepo.findById((Integer) session.getAttribute("userId")).orElse(null);
 
+        ActivityLogRequest log=new ActivityLogRequest();
+        log.setTableName("USERS");
+        log.setUserId((Integer)session.getAttribute("userId"));
         log.setRecordId(addedUser.getUserId());
         log.setAction("CREATE");
         activityLogService.addActivityLog(log,loginedUser);

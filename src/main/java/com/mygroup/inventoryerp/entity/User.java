@@ -40,12 +40,10 @@ public class User {
     private LocalDateTime lastLogin;
 
     @ManyToOne
-    @JsonManagedReference
     @JoinColumn(name = "role_id")
     private Role role;
 
     @OneToMany(mappedBy = "user")
-    @JsonManagedReference
     private List<ActivityLog> activityLogs;
 
     public User() {

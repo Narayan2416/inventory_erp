@@ -23,12 +23,10 @@ public class Order {
     private boolean status;
 
     @ManyToOne
-    @JsonManagedReference
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
     @OneToMany(mappedBy = "order",cascade = CascadeType.ALL,orphanRemoval = true)
-    @JsonManagedReference
     private List<OrderItem> orderItems;
 
     public Order() {

@@ -1,6 +1,6 @@
 package com.mygroup.inventoryerp.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -30,7 +30,7 @@ public class ActivityLogDetail {
     private String newValue;
 
     @ManyToOne
-    @JsonBackReference
+    @JsonIgnore
     @JoinColumn(name = "log_id", nullable = false)
     private ActivityLog activityLog;
 

@@ -1,6 +1,7 @@
 package com.mygroup.inventoryerp.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Column;
@@ -28,12 +29,11 @@ public class OrderItem {
     private int itemTotal;
 
     @ManyToOne
-    @JsonManagedReference
     @JoinColumn(name = "product_id")
     private Product product;
 
     @ManyToOne
-    @JsonBackReference
+    @JsonIgnore
     @JoinColumn(name = "order_id")
     private Order order;
 

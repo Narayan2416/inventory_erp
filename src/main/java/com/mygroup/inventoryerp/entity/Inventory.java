@@ -33,7 +33,6 @@ public class Inventory {
     private LocalDateTime lastUpdated;
 
     @ManyToOne
-    @JsonManagedReference
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 

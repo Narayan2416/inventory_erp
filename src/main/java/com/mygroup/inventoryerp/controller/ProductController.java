@@ -25,8 +25,8 @@ public class ProductController {
     }
 
     @PostMapping("/addproduct")
-    public Map<String,Object> addProduct(@RequestBody Product product) {
-        return productService.addProduct(product);
+    public Map<String,Object> addProduct(@RequestBody Product product,HttpSession session) {
+        return productService.addProduct(product, session);
     }
 
     @GetMapping("/getproducts")
@@ -69,7 +69,7 @@ public class ProductController {
     }
 
     @DeleteMapping("/deleteproduct/{id}")
-    public Map<String, Object> deleteProduct(@PathVariable Integer id) {
+    public Map<String, Object> deleteProduct(@PathVariable Integer id,HttpSession session) {
 
         Product product = productService.getProductById(id);
 
@@ -80,7 +80,7 @@ public class ProductController {
             );
         }
 
-        productService.deleteProduct(id);
+        productService.deleteProduct(id,session);
 
         return Map.of(
                 "message", "Product deleted successfully",
