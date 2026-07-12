@@ -13,7 +13,6 @@ import com.mygroup.inventoryerp.entity.Product;
 import com.mygroup.inventoryerp.entity.User;
 import com.mygroup.inventoryerp.repository.ProductRepo;
 
-import jakarta.servlet.http.HttpSession;
 
 @Service
 public class ProductService {
@@ -43,7 +42,7 @@ public class ProductService {
         return productRepo.findAllProductType();
     }
 
-    public Map<String,Object> addProduct(Product product,HttpSession session){
+    public Map<String,Object> addProduct(Product product,int loginedUserId){
         Product addedProduct = productRepo.save(product);
         Map<String,Object> response=new HashMap<>();
         response.put("message","added successfully");
@@ -53,15 +52,15 @@ public class ProductService {
         log.setAction("CREATE");
         log.setTableName("PRODUCTS");
         log.setRecordId(addedProduct.getProductId());
-        log.setUserId((Integer) session.getAttribute("userId"));
+        log.setUserId(loginedUserId);
 
-        User loginedUser = userService.getUserById((Integer) session.getAttribute("userId"));
+        User loginedUser = userService.getUserById(loginedUserId);
         activityLogService.addActivityLog(log, loginedUser);
 
         return response;
     }
 
-    public Product editProduct(Integer id, Product updatedProduct,HttpSession session) {
+    public Product editProduct(Integer id, Product updatedProduct,int loginedUserId) {
 
         Product product = productRepo.findById(id).orElse(null);
 
@@ -112,23 +111,23 @@ public class ProductService {
             log.setAction("UPDATE");
             log.setTableName("PRODUCTS");
             log.setRecordId(product.getProductId());
-            log.setUserId((Integer) session.getAttribute("userId"));
+            log.setUserId(loginedUserId);
             log.setDetails(details);
 
-            User loginedUser = userService.getUserById((Integer) session.getAttribute("userId"));
+            User loginedUser = userService.getUserById(loginedUserId);
             activityLogService.addActivityLog(log, loginedUser);
         }
         return productRepo.save(product);
     }
 
-    public void deleteProduct(Integer id,HttpSession session) {
+    public void deleteProduct(Integer id,int loginedUserId) {
         ActivityLogRequest log = new ActivityLogRequest();
         log.setAction("DELETE");
         log.setTableName("PRODUCTS");
         log.setRecordId(id);
-        log.setUserId((Integer) session.getAttribute("userId"));
+        log.setUserId(loginedUserId);
 
-        User loginedUser = userService.getUserById((Integer) session.getAttribute("userId"));
+        User loginedUser = userService.getUserById(loginedUserId);
         activityLogService.addActivityLog(log, loginedUser);
 
         productRepo.deleteById(id);

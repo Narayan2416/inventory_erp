@@ -31,7 +31,8 @@ public class UserController {
 
     @PostMapping("/adduser")
     public Map<String,Object> addUser(@RequestBody UserInfo userInfo,HttpSession session) {
-        return userService.addUser(userInfo,session);
+        int loginedUserId = (int) session.getAttribute("userId");
+        return userService.addUser(userInfo,loginedUserId);
     }
 
     @GetMapping("/getusers")
@@ -46,14 +47,16 @@ public class UserController {
 
     @PutMapping("/edituser/{id}")
     public Map<String,Object> editUser(@PathVariable int id, @RequestBody UserInfo user,HttpSession session) {
-        userService.editUser(id, user,session);
+        int loginedUserId = (int) session.getAttribute("userId");
+        userService.editUser(id, user,loginedUserId);
         return Map.of("message", "User updated successfully","valid",true);
 
     }
 
     @DeleteMapping("/deleteuser/{id}")
     public Map<String,Object> deleteUser(@PathVariable int id,HttpSession session) {
-        userService.deleteUser(id,session);
+        int loginedUserId = (int) session.getAttribute("userId");
+        userService.deleteUser(id,loginedUserId);
         return Map.of("message", "User deleted successfully", "valid", true);
     }
 }
