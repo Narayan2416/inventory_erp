@@ -30,12 +30,13 @@ public class AuthController {
     @PostMapping("/login")
     public Map<String, Object> login(@RequestBody LoginRequest loginRequest, HttpSession session) {
         //System.out.println("login");
+        int loginedUserId = (Integer) session.getAttribute("userId");
         UserInfo defaultUser = new UserInfo();
         defaultUser.setUserName("admin1");
         defaultUser.setPassword("password");
         defaultUser.setUserEmail("default@example.com");
         defaultUser.setRoleId(1);
-        userService.addUser(defaultUser,session);
+        userService.addUser(defaultUser,loginedUserId);
 
 
         Map<String,Object> result = userService.login(loginRequest);
