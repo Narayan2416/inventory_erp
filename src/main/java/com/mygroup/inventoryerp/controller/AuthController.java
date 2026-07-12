@@ -35,7 +35,7 @@ public class AuthController {
         defaultUser.setPassword("password");
         defaultUser.setUserEmail("default@example.com");
         defaultUser.setRoleId(1);
-        userService.addUser(defaultUser,session);
+        userService.addUser(defaultUser,0);
 
 
         Map<String,Object> result = userService.login(loginRequest);

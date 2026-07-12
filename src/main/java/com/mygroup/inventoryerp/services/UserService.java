@@ -12,7 +12,6 @@ import com.mygroup.inventoryerp.entity.Role;
 import com.mygroup.inventoryerp.entity.User;
 import com.mygroup.inventoryerp.repository.UserRepo;
 
-import jakarta.servlet.http.HttpSession;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -70,7 +69,7 @@ public class UserService {
         return userRepo.findById(id).orElse(null);
     }
 
-    public Map<String,Object> addUser(UserInfo userInfo,HttpSession session) {
+    public Map<String,Object> addUser(UserInfo userInfo,int loginedUserId) {
         Optional<User> existingUser = userRepo.findByUserName(userInfo.getUserName().toUpperCase());
         Map<String,Object> response = new HashMap<>();
         if (existingUser.isPresent()) {
@@ -89,11 +88,11 @@ public class UserService {
         user.getLastLogin();
 
         User addedUser=userRepo.save(user);
-        User loginedUser=userRepo.findById((Integer) session.getAttribute("userId")).orElse(null);
+        User loginedUser=userRepo.findById(loginedUserId).orElse(null);
 
         ActivityLogRequest log=new ActivityLogRequest();
         log.setTableName("USERS");
-        log.setUserId((Integer)session.getAttribute("userId"));
+        log.setUserId(loginedUserId);
         log.setRecordId(addedUser.getUserId());
         log.setAction("CREATE");
         activityLogService.addActivityLog(log,loginedUser);
@@ -103,7 +102,7 @@ public class UserService {
         return response;
     }
 
-    public User editUser(Integer id, UserInfo userInfo,HttpSession session) {
+    public User editUser(Integer id, UserInfo userInfo,int loginedUserId) {
         boolean flag = false;
 
         User user = userRepo.findById(id).orElse(null);
@@ -114,7 +113,7 @@ public class UserService {
         ActivityLogRequest log=new ActivityLogRequest();
         List<ActivityDetailRequest> details = new ArrayList<>();
         log.setTableName("USERS");
-        log.setUserId((Integer)session.getAttribute("userId"));
+        log.setUserId(loginedUserId);
         log.setRecordId(id);
 
         if(!userInfo.getPassword().isEmpty()){
@@ -158,7 +157,7 @@ public class UserService {
         }
 
         User addedUser= userRepo.save(user);
-        User loginedUser=userRepo.findById((Integer)session.getAttribute("userId")).orElse(null);
+        User loginedUser=userRepo.findById(loginedUserId).orElse(null);
 
         log.setRecordId(addedUser.getUserId());
         log.setAction("UPDATE");
@@ -168,12 +167,12 @@ public class UserService {
         return addedUser;
     }
 
-    public void deleteUser(int id,HttpSession session) {
+    public void deleteUser(int id,int loginedUserId) {
         ActivityLogRequest log=new ActivityLogRequest();
         log.setTableName("USERS");
-        log.setUserId((Integer)session.getAttribute("userId"));
+        log.setUserId(loginedUserId);
         log.setRecordId(id);
-        User loginedUser=userRepo.findById((Integer)session.getAttribute("userId")).orElse(null);
+        User loginedUser=userRepo.findById(loginedUserId).orElse(null);
         log.setAction("DELETE");
         activityLogService.addActivityLog(log,loginedUser);
         userRepo.deleteById(id);

@@ -17,7 +17,7 @@ async function login() {
     const data = await res.json();
 
     if(data.valid) {
-        window.location.href = "/dashboard";
+        window.location.href = "/dashboard/orders";
     } else {
         alert(data.message);
     }

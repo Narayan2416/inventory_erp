@@ -26,7 +26,8 @@ public class ProductController {
 
     @PostMapping("/addproduct")
     public Map<String,Object> addProduct(@RequestBody Product product,HttpSession session) {
-        return productService.addProduct(product, session);
+        int loginedUserId = (Integer) session.getAttribute("userId");
+        return productService.addProduct(product, loginedUserId);
     }
 
     @GetMapping("/getproducts")
@@ -52,8 +53,8 @@ public class ProductController {
     
     @PutMapping("/editproduct/{id}")
     public Map<String, Object> editProduct(@PathVariable Integer id,@RequestBody Product product,HttpSession session) {
-
-        Product updatedProduct = productService.editProduct(id, product,session);
+        int loginedUserId = (Integer) session.getAttribute("userId");
+        Product updatedProduct = productService.editProduct(id, product, loginedUserId);
 
         if (updatedProduct == null) {
             return Map.of(
@@ -70,6 +71,7 @@ public class ProductController {
 
     @DeleteMapping("/deleteproduct/{id}")
     public Map<String, Object> deleteProduct(@PathVariable Integer id,HttpSession session) {
+        int loginedUserId = (Integer) session.getAttribute("userId");
 
         Product product = productService.getProductById(id);
 
@@ -80,7 +82,7 @@ public class ProductController {
             );
         }
 
-        productService.deleteProduct(id,session);
+        productService.deleteProduct(id,loginedUserId);
 
         return Map.of(
                 "message", "Product deleted successfully",
